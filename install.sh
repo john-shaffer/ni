@@ -87,7 +87,9 @@ run_cryptsetup(){
   done
 
   # Creating passwords for root and encryption (if enabled)
-  INST_PASSWD=$(diceware -n 3);
+  if [ ! $INST_PASSWD ]; then
+    INST_PASSWD=$(diceware -n 3);
+  fi
   INST_PASSWD_SHA512=$(mkpasswd  -m sha-512 -s <<< ${INST_PASSWD})
 
   if [ $ENCRYPTION ]; then
