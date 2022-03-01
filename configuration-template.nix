@@ -111,7 +111,7 @@
   services.xserver.synaptics.enable = true;
 
   # Enable for Gnome Desktop Environment
-  services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
   services.xserver.displayManager.gdm.enable = true;
 
   # Set your time zone.
