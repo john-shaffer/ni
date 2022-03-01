@@ -114,12 +114,12 @@ run_fssetup(){
     lvcreate -n swap vg -L 8G >/dev/null
     lvcreate -n root vg -l 100%FREE >/dev/null
   echo "done."
-  echo -n "[-] Formating filesystems... "
+  echo -n "[-] Formatting filesystems... "
   mkfs.fat -F 32 -n boot ${INST_DEVICE}1 >/dev/null 2>&1
   mkfs.ext4 -L root /dev/vg/root >/dev/null >/dev/null 2>&1
   mkswap -L swap /dev/vg/swap >/dev/null 2>&1
   echo "done."
-  echo -n "[-] Mouting filesystems... "
+  echo -n "[-] Mounting filesystems... "
   mount /dev/disk/by-label/root /mnt
   mkdir -p /mnt/boot
   mount /dev/disk/by-label/boot /mnt/boot
