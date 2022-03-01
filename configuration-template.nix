@@ -29,29 +29,35 @@
   # Root password
   users.users.root.initialHashedPassword = "##rootpasswd##";
 
+  nix = {
+    autoOptimiseStore = true;
+    extraOptions = ''
+      keep-derivations = true
+      keep-outputs = true
+    '';
+  };
+
   # Allow unfree proprietary packages such as spotify or vscode
   nixpkgs.config.allowUnfree = true;
   
   # System-wide packages
   environment.systemPackages = with pkgs; [ 
+    jmtpfs
     # System utilities
     ark
+    git
     usbutils
     unzip
     vim
     wget
-    # Desktop utilities
-    evince
-    firefox
-    keepassxc
-    libreoffice-fresh
-    phototonic
-    signal-desktop
-    thunderbird
-    vlc
     # Gnome specifics and utilities
-    gnome3.gnome-tweaks
+    gnome.gnome-tweaks
     gnomeExtensions.dash-to-panel
+    gnomeExtensions.tray-icons-reloaded
+  ];
+
+  environment.gnome.excludePackages = with pkgs; [
+    gnome.geary
   ];
 
   # Enabling unfree packages, adding unstable channel to be able to install latest packages as user
@@ -63,7 +69,18 @@
     fi
   '';
 
-  # List services that you want to enable:
+  # Enable BT
+  hardware.bluetooth.enable = true;
+
+  # Enable pulseaudio with BT support
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
+
+  services.cron = {
+    enable = true;
+  };
 
   # Limit journal size
    services.journald = {
@@ -76,19 +93,15 @@
   # Enable sound.
   sound.enable = true;
 
-  # Enable BT
-  hardware.bluetooth.enable = true;
-
-  # Enable pulseaudio with BT support
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
+  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "eurosign:e";
+  services.xserver = {
+    enable = true;
+    layout = "us";
+    xkbOptions = "grp:win_space_toggle";
+    xkbVariant = "dvorak";
+  };
 
   # Enable touchpad support.
   # It is needed to explicitly disable libinput if we want to use synaptics
@@ -98,11 +111,11 @@
   services.xserver.synaptics.enable = true;
 
   # Enable for Gnome Desktop Environment
-  services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
 
   # Set your time zone.
-  time.timeZone = "UTC";
+  time.timeZone = "America/Chicago";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.##username## = {
@@ -113,10 +126,19 @@
     extraGroups = [ "wheel" "networkmanager" ];
   };
 
+  virtualisation = {
+    podman = {
+      enable = true;
+
+      # Create a `docker` alias for podman, to use it as a drop-in replacement
+      dockerCompat = true;
+    };
+  };
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "20.03"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
  
 }

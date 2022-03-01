@@ -12,10 +12,10 @@ installer will overwrite your disk.
 ## Usage
 
 ### Preparation
-Download the latest graphical live NixOS from https://channels.nixos.org/nixos-20.09/latest-nixos-gnome-x86_64-linux.iso 
+Download the latest graphical live NixOS from https://channels.nixos.org/nixos-21.11/latest-nixos-gnome-x86_64-linux.iso 
 and create a live USB (replace VERSION.COMMIT and sdX with appropriate values), e.g. (be careful):
 
-```$ sudo dd if=Downloads/nixos-gnome-20.09.VERSION.COMMIT-x86_64-linux.iso of=/dev/sdX bs=1M && sync```
+```$ sudo dd if=Downloads/nixos-gnome-21.11.VERSION.COMMIT-x86_64-linux.iso of=/dev/sdX bs=1M && sync```
 
 Make sure SATA mode is set to AHCI, i.e. disable Intel Rapid Storage Technology, if it's present.
 
@@ -24,7 +24,7 @@ Boot into live disk and start and connect to the Internet.
 ### Running the installer
 Open Terminal and download the installation script:
 
-```$ curl -O https://raw.githubusercontent.com/1000101/ni/master/ni.sh```
+```$ curl -O https://raw.githubusercontent.com/john-shaffer/ni/master/ni.sh```
 
 Run the installation script:
 
@@ -43,24 +43,3 @@ Login as root and set user password:
 Then logout and login as user.
 
 Enjoy!
-
-
-## AMD Ryzen 4750U
-This is quite a new processor and the live USB hangs on startup due to GPU issues. We have to apply some workarounds (latest kernel and kernel params) and also boot from unstable minimal version of NixOS.
-
-### Preparation
-Download the 20.09 minimal (no GUI) live NixOS from https://channels.nixos.org/nixos-20.09/latest-nixos-minimal-x86_64-linux.iso 
-and create a live USB.
-
-Boot into live disk and start and connect to the Internet (ethernet or wpa_supplicant).
-
-### Running the installer
-Open Terminal and download the installation script (NOTE THE DIFFERENT BRANCH - AMD):
-
-```$ curl -O https://raw.githubusercontent.com/1000101/ni/amd/ni.sh```
-
-Run the installation script:
-
-```$ sudo bash ni.sh```
-
-The rest is the same as above.
