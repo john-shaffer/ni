@@ -144,9 +144,13 @@ run_nixossetup(){
   echo "done."
 }
 
+if [ ! $SUBSTITUTERS ]; then
+  export SUBSTITUTERS="https://cache.nixos.org/"
+fi
+
 run_nixosinstall(){
   echo "[-] Running nixos-install... "
-  nixos-install --no-root-passwd
+  nixos-install --no-root-passwd --option substituters $SUBSTITUTERS
 }
 
 print_finish(){
