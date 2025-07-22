@@ -93,7 +93,6 @@
     enable = true;
     layout = "us";
     xkbOptions = "grp:win_space_toggle";
-    xkbVariant = "dvorak";
   };
 
   # Enable touchpad support.
