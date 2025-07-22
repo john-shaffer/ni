@@ -1,7 +1,7 @@
 # NI - NixOS Installer
 A simple guided Terminal NixOS Installer.
 
-More info (what's inside) can be found at https://dopp.sk/posts/NixOS_Installer/
+More info (what's inside) can be found at https://web.archive.org/web/20221006043004/https://dopp.sk/posts/NixOS_Installer/
 
 ## WARNING
 **!!!THIS SCRIPT WILL ERASE YOUR ENTIRE DISK = ALL DATA WILL BE LOST!!!**
