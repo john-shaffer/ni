@@ -5,14 +5,13 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Specify the encrypted disk
   boot.initrd.luks.devices.root = {
-    device = "##device##2"; 
+    device = "##device##2";
     preLVM = true;
   };
 
@@ -22,7 +21,7 @@
 
   # Networking setup
   networking.hostName = "##username##";
-  
+
   # Enable NetworkManager
   networking.networkmanager.enable = true;
 
@@ -39,9 +38,9 @@
 
   # Allow unfree proprietary packages such as spotify or vscode
   nixpkgs.config.allowUnfree = true;
-  
+
   # System-wide packages
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     jmtpfs
     # System utilities
     ark
@@ -56,9 +55,7 @@
     gnomeExtensions.tray-icons-reloaded
   ];
 
-  environment.gnome.excludePackages = with pkgs; [
-    gnome.geary
-  ];
+  environment.gnome.excludePackages = with pkgs; [ gnome.geary ];
 
   # Enabling unfree packages, adding unstable channel to be able to install latest packages as user
   environment.interactiveShellInit = ''
@@ -78,14 +75,10 @@
     package = pkgs.pulseaudioFull;
   };
 
-  services.cron = {
-    enable = true;
-  };
+  services.cron = { enable = true; };
 
   # Limit journal size
-   services.journald = {
-    extraConfig = "SystemMaxUse=500M";
-  };
+  services.journald = { extraConfig = "SystemMaxUse=500M"; };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -118,7 +111,7 @@
   time.timeZone = "America/Chicago";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.##username## = {
+  users.users."##username##" = {
     isNormalUser = true;
     uid = 1000;
     createHome = true;
@@ -140,5 +133,5 @@
   # servers. You should change this only after NixOS release notes say you
   # should.
   system.stateVersion = "21.11"; # Did you read the comment?
- 
+
 }
